@@ -3,24 +3,24 @@ CREATE DATABASE IF NOT EXISTS Optical_shop;
 USE Optical_shop;
 
 CREATE TABLE Address (
-	Id_address int AUTO_INCREMENT,
-	Street varchar(50) NOT NULL,
-	Number varchar(15) NOT NULL,
-	Floor varchar(15),
-	Door varchar(15),
-	City varchar(50) NOT NULL,
-	Postal_code varchar(15) NOT NULL,
-	Country varchar(50) NOT NULL,
+	Id_address INT AUTO_INCREMENT,
+	Street VARCHAR(50) NOT NULL,
+	Number VARCHAR(15) NOT NULL,
+	Floor VARCHAR(15),
+	Door VARCHAR(15),
+	City VARCHAR(50) NOT NULL,
+	Postal_code VARCHAR(15) NOT NULL,
+	Country VARCHAR(50) NOT NULL,
 	PRIMARY KEY (Id_address)
 );
 
 CREATE TABLE Supplier (
-    Id_supplier int AUTO_INCREMENT,
-    Name varchar(50) NOT NULL,
-    Id_address int,
-    Phone varchar(50) NOT NULL,
-    Fax varchar(50),
-    NIF varchar(50) NOT NULL,
+    Id_supplier INT AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    Id_address INT,
+    Phone VARCHAR(50) NOT NULL,
+    Fax VARCHAR(50),
+    NIF VARCHAR(50) NOT NULL,
     PRIMARY KEY (Id_supplier),
     FOREIGN KEY (Id_address) REFERENCES Address(Id_address)
     ON DELETE CASCADE
@@ -28,16 +28,16 @@ CREATE TABLE Supplier (
 );
 
 CREATE TABLE Glasses (
-	Id_glasses int AUTO_INCREMENT,
-	Id_supplier int NOT NULL,
-	Brand varchar(50) NOT NULL,
-	Graduation_1 float,
-	Graduation_2 float,
+	Id_glasses INT AUTO_INCREMENT,
+	Id_supplier INT NOT NULL,
+	Brand VARCHAR(50) NOT NULL,
+	Graduation_1 FLOAT,
+	Graduation_2 FLOAT,
 	Mount ENUM('Floating', 'Plastic', 'Metal') NOT NULL,
-	Mount_color varchar(50) NOT NULL,
-	Color_1 varchar(50),
-	Color_2 varchar(50),
-	Price float(15) NOT NULL,
+	Mount_color VARCHAR(50) NOT NULL,
+	Color_1 VARCHAR(50),
+	Color_2 VARCHAR(50),
+	Price FLOAT(15) NOT NULL,
 	PRIMARY KEY (Id_glasses),
     FOREIGN KEY (Id_supplier) REFERENCES Supplier(Id_supplier)
     ON DELETE CASCADE
@@ -45,14 +45,14 @@ CREATE TABLE Glasses (
 );
 
 CREATE TABLE Customer (
-	Id_customer int AUTO_INCREMENT,
-	Name varchar(50) NOT NULL,
-	Surname varchar(50) NOT NULL,
-	Id_address int,
-	Phone varchar(50) NOT NULL,
-	Email varchar(50),
-	Starting_date date DEFAULT CURRENT_DATE,
-	Id_referring_customer int,
+	Id_customer INT AUTO_INCREMENT,
+	Name VARCHAR(50) NOT NULL,
+	Surname VARCHAR(50) NOT NULL,
+	Id_address INT,
+	Phone VARCHAR(50) NOT NULL,
+	Email VARCHAR(50),
+	Starting_date DATE DEFAULT CURRENT_DATE,
+	Id_referring_customer INT,
 	PRIMARY KEY (Id_customer),
     FOREIGN KEY (Id_address) REFERENCES Address(Id_address)
     ON DELETE CASCADE
@@ -63,20 +63,20 @@ CREATE TABLE Customer (
 );
 
 CREATE TABLE Employee (
-	Id_employee int AUTO_INCREMENT,
-	Name varchar(50) NOT NULL,
-	Surname varchar(50) NOT NULL,
-	NIF varchar(15) NOT NULL,
-	Starting_date date DEFAULT CURRENT_DATE,
+	Id_employee INT AUTO_INCREMENT,
+	Name VARCHAR(50) NOT NULL,
+	Surname VARCHAR(50) NOT NULL,
+	NIF VARCHAR(15) NOT NULL,
+	Starting_date DATE DEFAULT CURRENT_DATE,
 	PRIMARY KEY (Id_employee)
 );
 
 CREATE TABLE Sale (
-	Id_sale int AUTO_INCREMENT,
-	Id_employee int NOT NULL,
-	Id_customer int NOT NULL,
-	Total_amount float,
-	Date_time datetime DEFAULT CURRENT_TIMESTAMP,
+	Id_sale INT AUTO_INCREMENT,
+	Id_employee INT NOT NULL,
+	Id_customer INT NOT NULL,
+	Total_amount FLOAT,
+	Date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (Id_sale),
     FOREIGN KEY (Id_employee) REFERENCES Employee(Id_employee)
     ON DELETE CASCADE
@@ -87,10 +87,10 @@ CREATE TABLE Sale (
 );
 
 CREATE TABLE Sale_detail (
-	Id_sale int NOT NULL,
-	Id_glasses int NOT NULL,
-	Quantity int NOT NULL,
-	Unit_price float,
+	Id_sale INT NOT NULL,
+	Id_glasses INT NOT NULL,
+	Quantity INT NOT NULL,
+	Unit_price FLOAT,
 	PRIMARY KEY (Id_sale, Id_glasses),
     FOREIGN KEY (Id_glasses) REFERENCES Glasses(Id_glasses)
     ON DELETE CASCADE
@@ -159,12 +159,17 @@ INSERT INTO Sale(Id_employee, Id_customer)
 VALUES
 (1, 3),
 (3, 2),
-(2, 2);
+(2, 2),
+(2, 1),
+(2, 3);
 
 INSERT INTO Sale_detail(Id_sale, Id_glasses, Quantity)
 VALUES
 (1, 3, 5),
-(1, 1, 2),
+(1, 2, 2),
 (2, 3, 1),
 (3, 2, 2),
-(3, 1, 4);
+(3, 3, 4),
+(4, 2, 3),
+(4, 3, 1),
+(5, 3, 3);
